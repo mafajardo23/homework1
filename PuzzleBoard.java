@@ -1,7 +1,9 @@
 import java.util.List;
+import java.util.Queue;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.LinkedList;
 
 /**
  * Class: CSC-370
@@ -95,12 +97,12 @@ public class PuzzleBoard {
     
     // one Random for the whole program, reused by every call.
     private static Random random = new Random();
+
     // randomly select from availableIndices passed from findAdjacent
     public static int selectRandomIndex(List<Integer> availableIndices) {
         int pick = random.nextInt(availableIndices.size());
         return availableIndices.get(pick);
-}
-
+    }
 
     // turn a board into a String so a HashSet can compare it by contents
     public static String key(int[] board) {
@@ -148,12 +150,31 @@ public class PuzzleBoard {
         return board;
     }
 
+    public static int bfs(int[] staringBoard) {
+    Queue<int[]> frontier = new LinkedList<>();
+    Queue<Integer> depthCheck = new LinkedList<>();
+    Set<String> exploredSet = new HashSet<>();
+    int depth = 0;
+
+    frontier.add(staringBoard);
+    depthCheck.add(depth);
+    exploredSet.add(key(staringBoard));
+
+    int[] goal = goalState();
+
+    while (!frontier.isEmpty()) {
+        
+    }
+
+    return -1; // Error handling
+}
+
     // run it w/ check
     // keep walking until we get a board confirmed to be exactly d moves out
     public static int[] generate(int d) {
         while (true) {
             int[] candidate = randomWalk(d);
-            if (candidate != null && manhattan(candidate) == d) {
+            if (candidate != null && bfs(candidate) == d) {
                 return candidate;
             }
         }
