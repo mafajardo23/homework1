@@ -166,7 +166,7 @@ public class PuzzleBoard {
         int[] currentBoard = frontier.poll();
         depth = depthCheck.poll();
 
-        if (currentBoard.equals(goal)) {
+        if (Arrays.equals(currentBoard, goal)) {
             return depth;
         }
 
