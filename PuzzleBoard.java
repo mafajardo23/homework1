@@ -150,15 +150,15 @@ public class PuzzleBoard {
         return board;
     }
 
-    public static int bfs(int[] staringBoard) {
+    public static int bfs(int[] startingBoard) {
     Queue<int[]> frontier = new LinkedList<>();
     Queue<Integer> depthCheck = new LinkedList<>();
     Set<String> exploredSet = new HashSet<>();
     int depth = 0;
 
-    frontier.add(staringBoard);
+    frontier.add(startingBoard);
     depthCheck.add(depth);
-    exploredSet.add(key(staringBoard));
+    exploredSet.add(key(startingBoard));
 
     int[] goal = goalState();
 
