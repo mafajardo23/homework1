@@ -1,7 +1,9 @@
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 
@@ -199,24 +201,20 @@ public class PuzzleBoard {
 
     // RUN THE EXPIREMENT
     public static void main(String[] args) {
+        Map<Integer, List<int[]>> simulationProblems = new HashMap<>();
+
         for (int d = 2; d <= 24; d += 2) {
+            List<int[]> depthBoards = new ArrayList<>();
+
             for (int i = 0; i < 100; i++) {
                 int[] puzzle = generate(d);
-                System.out.println(d + ": " + Arrays.toString(puzzle));
+                depthBoards.add(puzzle);
             }
+
+            simulationProblems.put(d, depthBoards);
         }
     }
+    }
 
-
-
-                                              
-
-    
-
-
-
-
-
-}
  
 
