@@ -163,7 +163,24 @@ public class PuzzleBoard {
     int[] goal = goalState();
 
     while (!frontier.isEmpty()) {
-        
+        int[] currentBoard = frontier.poll();
+        depth = depthCheck.poll();
+
+        if (currentBoard.equals(goal)) {
+            return depth;
+        }
+
+        int blank = findEmptyCell(currentBoard);
+        int [] options = findAdjacent(currentBoard, blank);
+
+        for (int spot : options) {
+            int[] succesors = swap(currentBoard, blank, spot);
+            if (!exploredSet.contains(key(succesors))) {
+                frontier.add(succesors);
+                depthCheck.add(depth + 1);
+                exploredSet.add(key(succesors));
+            }
+        }
     }
 
     return -1; // Error handling
