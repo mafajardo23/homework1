@@ -1,11 +1,10 @@
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
+
 
 /**
  * Class: CSC-370
@@ -111,6 +110,34 @@ public class PuzzleBoard {
         return Arrays.toString(board);
     }
 
+    // h1: how many tiles are sitting in the wrong square (blank doesn't count)
+    public static int h1(int[] board) {
+        int count = 0;
+        for (int i = 0; i < board.length; i++) {
+            if (board[i] == 0) {
+                continue;
+            }
+            if (board[i] != i) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    // h2: total Manhattan distance, every tile to its home square (blank doesn't count)
+    public static int h2(int[] board) {
+        int total = 0;
+        for (int i = 0; i < board.length; i++) {
+            int tile = board[i];
+            if (tile == 0) {
+                continue;
+            }
+            total += Math.abs(i / 3 - tile / 3) + Math.abs(i % 3 - tile % 3);
+        }
+        return total;
+    }
+
+
 
     // filtering options to prevent loops
     public static List<Integer> filterVisited(int[] board, int emptyIndex, int[] options, Set<String> visited) {
@@ -152,52 +179,18 @@ public class PuzzleBoard {
         return board;
     }
 
-    public static int bfs(int[] startingBoard) {
-    Queue<int[]> frontier = new LinkedList<>();
-    Queue<Integer> depthCheck = new LinkedList<>();
-    Set<String> exploredSet = new HashSet<>();
-    int depth = 0;
-
-    frontier.add(startingBoard);
-    depthCheck.add(depth);
-    exploredSet.add(key(startingBoard));
-
-    int[] goal = goalState();
-
-    while (!frontier.isEmpty()) {
-        int[] currentBoard = frontier.poll();
-        depth = depthCheck.poll();
-
-        if (Arrays.equals(currentBoard, goal)) {
-            return depth;
-        }
-
-        int blank = findEmptyCell(currentBoard);
-        int [] options = findAdjacent(currentBoard, blank);
-
-        for (int spot : options) {
-            int[] succesors = swap(currentBoard, blank, spot);
-            if (!exploredSet.contains(key(succesors))) {
-                frontier.add(succesors);
-                depthCheck.add(depth + 1);
-                exploredSet.add(key(succesors));
-            }
-        }
-    }
-
-    return -1; // Error handling
-}
-
     // run it w/ check
     // keep walking until we get a board confirmed to be exactly d moves out
     public static int[] generate(int d) {
         while (true) {
             int[] candidate = randomWalk(d);
-            if (candidate != null && bfs(candidate) == d) {
+            if (candidate != null && Search.bfs(candidate) == d) {
                 return candidate;
             }
         }
     }
+
+    
 
     // RUN THE EXPIREMENT
     public static void main(String[] args) {
