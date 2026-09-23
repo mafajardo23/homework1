@@ -137,7 +137,7 @@ public class PuzzleBoard {
         return total;
     }
 
-    // h3: constraint relaxation approach. Manhattan distance plus 2 for every pair of tiles that are in the same row or column and are reversed from their goal order.
+    // h3: constraint relaxation approach. Manhattan distance plus 2 for every pair of tiles that are in the same row or column and are reversed from their goal order
     public static int h3(int[] board) {
         int total = h2(board);
 
@@ -183,10 +183,14 @@ public class PuzzleBoard {
         return total;           
     }
 
+    public static int h4(int[] board) {
+        return 0;
+    }
+
     public static double bFactor(int nBoards, int depth){
         double min = 1.0;
         double expNodes = nBoards + 1.0;
-         double max = expNodes;
+        double max = expNodes;
 
         for (int itCounter = 0; itCounter < 100; itCounter++) {
             double sum = 0.0;
