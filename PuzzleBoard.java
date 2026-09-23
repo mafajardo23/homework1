@@ -143,7 +143,7 @@ public class PuzzleBoard {
 
         for (int index = 0; index < board.length; index++) {
             int tile = board[index];
-            
+
             if (tile == 0) {
                 continue;
             }
@@ -183,6 +183,29 @@ public class PuzzleBoard {
         return total;           
     }
 
+    public static double bFactor(int nBoards, int depth){
+        double min = 1.0;
+        double expNodes = nBoards + 1.0;
+         double max = expNodes;
+
+        for (int itCounter = 0; itCounter < 100; itCounter++) {
+            double sum = 0.0;
+            double average = (min + max) /  2.0;
+
+                // geosum
+            for (int powCounter = 0; powCounter <= depth; powCounter++) {
+                sum += Math.pow(average, powCounter);
+            }
+
+            if (sum < expNodes) {
+                min = average;
+            } else {
+                max = average;
+            }
+        }
+
+        return  (min + max) / 2.0;
+    }
 
     // filtering options to prevent loops
     public static List<Integer> filterVisited(int[] board, int emptyIndex, int[] options, Set<String> visited) {
