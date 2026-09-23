@@ -258,13 +258,10 @@ public class PuzzleBoard {
         }
     }
 
-    
-
-    // RUN THE EXPIREMENT
-    public static void main(String[] args) {
+    public static Map<Integer, List<int[]>> generateAllProblems() {
         Map<Integer, List<int[]>> simulationProblems = new HashMap<>();
 
-        for (int d = 2; d <= 24; d += 2) {
+        for (int d = 2; d <= 8; d += 2) {
             List<int[]> depthBoards = new ArrayList<>();
 
             for (int i = 0; i < 100; i++) {
@@ -274,8 +271,15 @@ public class PuzzleBoard {
 
             simulationProblems.put(d, depthBoards);
         }
+
+        return simulationProblems;
     }
+
+    // RUN THE EXPIREMENT
+    public static void main(String[] args) {
+        Map<Integer, List<int[]>> simulationProblems = generateAllProblems();
     }
+}
 
  
 

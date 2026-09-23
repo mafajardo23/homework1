@@ -50,13 +50,16 @@ public class Search {
     // the two heuristic choices, named so call sites read clearly
     public static final int MISPLACED_TILES = 1;
     public static final int MANHATTAN = 2;
+    public static final int LINEAR_CONFLICT = 3;
 
     // hands back the right estimate for this board, based on which one was asked for
     public static int heuristic(int[] board, int which) {
         if (which == MISPLACED_TILES) {
             return PuzzleBoard.h1(board);
-        } else {
+        } else if (which == MANHATTAN) {
             return PuzzleBoard.h2(board);
+        } else {
+            return PuzzleBoard.h3(board);
         }
     }
 
