@@ -137,6 +137,51 @@ public class PuzzleBoard {
         return total;
     }
 
+    // h3: constraint relaxation approach. Manhattan distance plus 2 for every pair of tiles that are in the same row or column and are reversed from their goal order.
+    public static int h3(int[] board) {
+        int total = h2(board);
+
+        for (int index = 0; index < board.length; index++) {
+            int tile = board[index];
+            
+            if (tile == 0) {
+                continue;
+            }
+
+            int row = index / 3;
+            int col = index % 3;
+            int goalRow = tile / 3;
+            int goalCol = tile % 3;
+
+            for (int otherIndex = index + 1; otherIndex < board.length; otherIndex++) {
+                int otherTile = board[otherIndex];
+                if (otherTile == 0) {
+                    continue;
+                }
+
+                int otherRow = otherIndex / 3;
+                int otherCol = otherIndex % 3;
+                int otherGoalRow = otherTile / 3;
+                int otherGoalCol = otherTile % 3;
+
+                // row conflict
+                if (row == otherRow && goalRow == row && otherGoalRow == row) {
+                    if (col > otherCol && goalCol < otherGoalCol) {
+                        total += 2;
+                    }
+                }
+
+                // column conflict
+                if (col == otherCol && goalCol == col && otherGoalCol == col) {
+                    if (row > otherRow && goalRow < otherGoalRow) {
+                        total += 2;
+                    }
+                }
+            }
+        }
+
+        return total;           
+    }
 
 
     // filtering options to prevent loops
