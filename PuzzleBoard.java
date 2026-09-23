@@ -141,20 +141,26 @@ public class PuzzleBoard {
         int total = h2(board);
 
         for (int row = 0; row < 3; row++) {
-            List<Integer> tiles = new ArrayList<>();
+            List<Integer> conflictCandidates = new ArrayList<>();
 
             for (int col = 0; col < 3; col++) {
-                int index = row * 3 + col;
-                int tile = board[index];
+                int currPosition = row * 3 + col;
+                int currNumber = board[currPosition];
 
-                if (tile != 0) { //ignore blank
-                    int goalRow = tile / 3;
+                if (currNumber != 0) { //ignore blank
+                    int goalRow = currNumber / 3;
                     if (goalRow == row) {
-                        tiles.add(index);
+                        conflictCandidates.add(currPosition);
                     }
+                }
+
+                for (int remRound = 0; remRound < conflictCandidates.size(); remRound++) {
+                    
                 }
             }
         }
+
+
 
         return total;
     }
