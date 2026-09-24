@@ -51,6 +51,7 @@ public class Search {
     public static final int MISPLACED_TILES = 1;
     public static final int MANHATTAN = 2;
     public static final int LINEAR_CONFLICT = 3;
+    public static final int ZERO = 4;
 
     // hands back the right estimate for this board, based on which one was asked for
     public static int heuristic(int[] board, int which) {
@@ -58,6 +59,8 @@ public class Search {
             return PuzzleBoard.h1(board);
         } else if (which == MANHATTAN) {
             return PuzzleBoard.h2(board);
+        } else if (which == ZERO) {
+            return PuzzleBoard.h4(board);
         } else {
             return PuzzleBoard.h3(board);
         }
