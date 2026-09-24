@@ -137,89 +137,6 @@ public class PuzzleBoard {
         return total;
     }
 
-    public static int h3Final(int[] board) {
-        int total = h2(board);
-
-        for (int row = 0; row < 3; row++) {
-            List<Integer> conflictCandidates = new ArrayList<>();
-
-            for (int col = 0; col < 3; col++) {
-                int position = row * 3 + col;
-                int tile = board[position];
-
-                if (tile != 0) { //ignore blank
-                    int goalRow = tile / 3;
-                    if (goalRow == row) {
-                        conflictCandidates.add(position);
-                    }
-                }
-            }
-
-            for (int remRound = 0; remRound < conflictCandidates.size(); remRound++) {
-                int conflictFound = 0;
-
-                for (int currIndex = 0; currIndex < conflictCandidates.size(); currIndex++) {
-                    int currPosition = conflictCandidates.get(currIndex);
-                    int currNumber = board[currPosition];
-                    int currCol = currPosition % 3;
-                    int currGoalCol = currNumber % 3;
-
-                    for (int otherIndex = currIndex + 1; otherIndex < conflictCandidates.size(); otherIndex++) {
-                        int otherPosition = conflictCandidates.get(otherIndex);
-                        int otherNumber = board[otherPosition];
-                        int otherCol = otherPosition % 3;
-                        int otherGoalCol = otherNumber % 3;
-
-                        if (currCol < otherCol && currGoalCol > otherGoalCol) {
-                            conflictFound++;
-                        }
-                    }
-                }
-
-                if (conflictFound == 0) {
-                    remRound = conflictCandidates.size();
-                } else {
-                    int highestConflictIndex = 0;
-                    int highestConflictCount = 0;
-
-                    for (int currIndex = 0; currIndex < conflictCandidates.size(); currIndex++) {
-
-                        int currPosition = conflictCandidates.get(currIndex);
-                        int currNumber = board[currPosition];
-                        int currCol = currPosition % 3;
-                        int currGoalCol = currNumber % 3;
-
-                        int count = 0;
-                        for (int otherIndex = 0; otherIndex < conflictCandidates.size(); otherIndex++) {
-                            if (currIndex != otherIndex) {
-                                int otherPosition = conflictCandidates.get(otherIndex);
-                                int otherNumber = board[otherPosition];
-                                int otherCol = otherPosition % 3;
-                                int otherGoalCol = otherNumber % 3;
-
-                                if (currCol < otherCol && currGoalCol > otherGoalCol) {
-                                    count++;
-                                }
-                            }
-                        }
-
-                        if (count > highestConflictCount) {
-                            highestConflictCount = count;
-                            highestConflictIndex = currIndex;
-                        }
-                    }
-
-                    conflictCandidates.remove(highestConflictIndex);
-                    total += 2;
-                }
-            }
-        }
-
-        return total;
-    }
-
-        
-
     // h3: constraint relaxation approach. Manhattan distance plus 2 for every pair of tiles that are in the same row or column and are reversed from their goal order
     public static int h3(int[] board) {
         int total = h2(board);
@@ -249,14 +166,14 @@ public class PuzzleBoard {
 
                 // row conflict
                 if (row == otherRow && goalRow == row && otherGoalRow == row) {
-                    if (col > otherCol && goalCol < otherGoalCol) {
+                    if (col < otherCol && goalCol > otherGoalCol) {
                         total += 2;
                     }
                 }
 
                 // column conflict
                 if (col == otherCol && goalCol == col && otherGoalCol == col) {
-                    if (row > otherRow && goalRow < otherGoalRow) {
+                    if (row < otherRow && goalRow > otherGoalRow) {
                         total += 2;
                     }
                 }
@@ -265,6 +182,7 @@ public class PuzzleBoard {
 
         return total;           
     }
+
 
     public static int h4(int[] board) {
         return 0;
